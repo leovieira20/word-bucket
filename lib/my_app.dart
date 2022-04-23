@@ -1,3 +1,4 @@
+import 'package:app/pages/entries/list/entries_list_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
@@ -8,10 +9,11 @@ class MyApp extends StatelessWidget {
     final auth = FirebaseAuth.instance;
 
     return MaterialApp(
-      initialRoute: auth.currentUser == null ? '/' : '/profile',
+      initialRoute: auth.currentUser == null ? '/' : '/entries',
       routes: {
         '/': (context) => _navigateToSignInScreen(),
         '/profile': (context) => _navigateToProfileScreen(),
+        '/entries': (context) => EntriesListPage(),
       },
     );
   }
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
     return SignInScreen(
       actions: [
         AuthStateChangeAction<SignedIn>((context, state) {
-          Navigator.pushReplacementNamed(context, '/profile');
+          Navigator.pushReplacementNamed(context, '/entries');
         }),
       ],
     );
