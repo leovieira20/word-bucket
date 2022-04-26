@@ -1,3 +1,4 @@
+import 'package:app/my_app.dart';
 import 'package:app/pages/entries/entry.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +14,7 @@ class EntriesListPage extends StatelessWidget {
       .collection('buckets')
       .doc('english')
       .collection('entries')
-      .orderBy('created_at', descending: true)
+      .orderBy(Entry.kCreatedAt, descending: true)
       .withConverter(
         fromFirestore: (snapshot, _) => Entry.fromJson(snapshot.data()!),
         toFirestore: (entry, _) => entry.toJson(),
@@ -35,6 +36,12 @@ class EntriesListPage extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, kCreateEntryRoute);
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
